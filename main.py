@@ -8,8 +8,15 @@ while True:
 
     match user_action:
         case "add":
-            todo = input("Enter a todo: ")
-            todos.append(todo)
+            todo = input("Enter a todo or write back to go to main menu: ")
+            while True:
+                if todo != "back":
+                    todos.append(todo)
+                    todo = input("Enter a todo or write back to go to main menu: ")
+                else:
+                    break
+            else:
+                break
         case "show" | "display":
             for index, i in enumerate(todos):
                 i = i.title()
