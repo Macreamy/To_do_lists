@@ -1,22 +1,22 @@
 user_prompt = "Type add, show, edit, complete or exit: "
 
-todos = []
-
 while True:
     user_action = input(user_prompt)
     user_action = user_action.strip()
 
     match user_action:
         case "add":
-            todo = input("Enter a todo or write back to go to main menu: ")
-            while True:
-                if todo != "back":
+            todo = input("Enter a todo or write back to go to main menu: ") + "\n"
+            file = open("todo.txt", "r")
+            todos = file.readlines()
+            file.close()
+            while todo != "back\n":
                     todos.append(todo)
-                    todo = input("Enter a todo or write back to go to main menu: ")
-                else:
-                    break
+                    file = open("todo.txt", "w")
+                    file.writelines(todos)
+                    todo = input("Enter a todo or write back to go to main menu: ") + "\n"
             else:
-                break
+                print("You have finished adding tasks!")
         case "show" | "display":
             for index, i in enumerate(todos):
                 i = i.title()
