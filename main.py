@@ -18,8 +18,14 @@ while True:
             else:
                 print("You have finished adding tasks!")
         case "show" | "display":
-            for index, i in enumerate(todos):
-                i = i.title()
+            file = open("todo.txt", "r")
+            todos = file.readlines()
+            file.close()
+            new_todos = []
+            for item in todos:
+                new_item = item.strip("\n")
+                new_todos.append(new_item)
+            for index, i in enumerate(new_todos):
                 row = f"{index + 1}.{i}"
                 print(row)
         case "edit":
@@ -31,9 +37,15 @@ while True:
         case "exit":
             break
         case "complete":
-            number = int(input("Number of the todo item to complete: "))
-            completed = todos.pop(number - 1)
-            print("You have completed", completed)
+            user_text = input("Number of the todo item to complete it or write complete all to finish all remaining tasks: ")
+            number = user_text
+            while number != "complete all":
+                number = int(number)
+                completed = todos.pop(number - 1)
+                print("You have completed", completed)
+            else:
+                open("todo.txt", "w").close()
+                print("You have finished all tasks")
         case _:
             print("Hey, unknown command")
 
