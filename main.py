@@ -7,35 +7,31 @@ while True:
     match user_action:
         case "add":
             todo = input("Enter a todo or write back to go to main menu: ") + "\n"
-            file = open("todo.txt", "r")
-            todos = file.readlines()
-            file.close()
+            with open("todo.txt", "r") as file:
+                todos = file.readlines()
             while todo != "back\n":
                     todos.append(todo)
-                    file = open("todo.txt", "w")
-                    file.writelines(todos)
+                    with open("todo.txt", "w") as file:
+                        file.writelines(todos)
                     todo = input("Enter a todo or write back to go to main menu: ") + "\n"
             else:
                 print("You have finished adding tasks!")
         case "show" | "display":
-            file = open("todo.txt", "r")
-            todos = file.readlines()
-            file.close()
+            with open("todo.txt", "r") as file:
+                todos = file.readlines()
             for index, i in enumerate(todos):
                 i = i.strip("\n")
                 row = f"{index + 1}.{i}"
                 print(row)
         case "edit":
-            file = open("todo.txt", "r")
-            todos = file.readlines()
-            file.close()
+            with open("todo.txt", "r") as file:
+                todos = file.readlines()
             number = int(input("Number of the todo item to edit: "))
             number = number - 1
             new_todo = input("Enter a new todo: ")
             todos[number] = new_todo + "\n"
-            file = open("todo.txt", "w")
-            file.writelines(todos)
-            file.close()
+            with open("todo.txt", "w") as file:
+                todos = file.writelines(new_todo)
             print(new_todo)
         case "exit":
             break
@@ -47,7 +43,9 @@ while True:
                 completed = todos.pop(number - 1)
                 print("You have completed", completed)
             else:
-                open("todo.txt", "w").close()
+                completed = ""
+                with open("todo.txt", "w") as file:
+                    todos = file.writelines(completed)
                 print("You have finished all tasks")
         case _:
             print("Hey, unknown command")
